@@ -93,7 +93,7 @@ function Navbar() {
                 ) : (
                     <ThemeProvider theme={theme}>
                         <Button variant="contained" color="grey" sx={{ textTransform: 'none' }}>About</Button>
-                        <Button variant="contained" color="grey" sx={{ textTransform: 'none', marginLeft: '20px' }}>Quran</Button>
+                        <Button variant="contained" color="grey" sx={{ textTransform: 'none', marginLeft: '20px' }} component={Link} to={'/quran'}>Quran</Button>
                         <Button variant="contained" color="grey" sx={{ textTransform: 'none', marginLeft: '20px' }}>Hadeeth</Button>
                         <Button variant="contained" color="grey" sx={{ textTransform: 'none', marginLeft: '20px' }}>Prayer</Button>
                     </ThemeProvider>

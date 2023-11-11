@@ -97,10 +97,18 @@ function Prayertimes() {
             const xmlDoc = parser.parseFromString(response.data, 'text/xml');
             const country = xmlDoc.querySelector('country').textContent;
             const province = xmlDoc.querySelector('state').textContent;
-            const city = xmlDoc.querySelector('city').textContent;
+            const city = xmlDoc.querySelector('city');
+            const town = xmlDoc.querySelector('town');
+            if (city) {
+                setCity(city.textContent);
+            } else {
+                setCity(town.textContent);
+            }
             setCountry(country);
             setProvince(province);
-            setCity(city);
+        }).catch(() => {
+            setCity(latitude);
+            setProvince(longitude);
         })
 
         axios.get('http://api.aladhan.com/v1/timings/' + `${day}-${month}-${year}`, {
