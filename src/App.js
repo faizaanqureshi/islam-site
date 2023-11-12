@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './pages/Home';
 import Quran from './pages/Quran';
+import Hadeeth from './pages/Hadeeth';
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/quran' element={<Quran />} />
+        <Route path='/hadeeth' element={<Hadeeth />} />
       </Routes>
     </BrowserRouter>
   );

@@ -3,7 +3,6 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { List } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
@@ -144,9 +143,8 @@ function Quranselector() {
     ]
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:5000/api/languages/')
+        axios.get('http://127.0.0.1:5000/api/quran/languages/')
             .then((response) => {
-                console.log(response.data)
                 setLanguages(response.data.languages.sort());
             })
             .catch(
@@ -203,7 +201,7 @@ function Quranselector() {
     const handleLanguageChange = (event, newValue) => {
         console.log(newValue);
         setSelectedLanguage(newValue);
-        axios.get('http://127.0.0.1:5000/api/editionsbylanguage/?language=' + newValue)
+        axios.get('http://127.0.0.1:5000/api/quran/editionsbylanguage/?language=' + newValue)
             .then((response) => {
                 setEditions(response.data.editions.sort());
             })

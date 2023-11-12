@@ -24,7 +24,7 @@ function Navbar() {
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 840);
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const pages = [{ name: "About", reference: "" }, { name: "Quran", reference: "/quran" }, { name: "Hadeeth", reference: "" }, { name: "Prayer", reference: "" }]
+    const pages = [{ name: "About", reference: "/about" }, { name: "Quran", reference: "/quran" }, { name: "Hadeeth", reference: "/hadeeth" }]
     const open = Boolean(anchorElNav);
 
     const handleClick = (event) => {
@@ -92,10 +92,9 @@ function Navbar() {
                     </Box>
                 ) : (
                     <ThemeProvider theme={theme}>
-                        <Button variant="contained" color="grey" sx={{ textTransform: 'none' }}>About</Button>
+                        <Button variant="contained" color="grey" sx={{ textTransform: 'none' }} component={Link} to={'/about'}>About</Button>
                         <Button variant="contained" color="grey" sx={{ textTransform: 'none', marginLeft: '20px' }} component={Link} to={'/quran'}>Quran</Button>
-                        <Button variant="contained" color="grey" sx={{ textTransform: 'none', marginLeft: '20px' }}>Hadeeth</Button>
-                        <Button variant="contained" color="grey" sx={{ textTransform: 'none', marginLeft: '20px' }}>Prayer</Button>
+                        <Button variant="contained" color="grey" sx={{ textTransform: 'none', marginLeft: '20px' }} component={Link} to={'/hadeeth'}>Hadeeth</Button>
                     </ThemeProvider>
                 )
                 }
