@@ -4,7 +4,10 @@ import Autocomplete from '@mui/material/Autocomplete';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { List } from '@mui/material';
-
+import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 function Quran() {
     return (
@@ -16,12 +19,13 @@ function Quran() {
 }
 
 function Quranselector() {
-    const [languages, setLanguages] = useState(null);
-    const [editions, setEditions] = useState(null);
+    const [languages, setLanguages] = useState([]);
+    const [editions, setEditions] = useState([]);
     const [selectedLanguage, setSelectedLanguage] = useState(null);
     const [selectedEdition, setSelectedEdition] = useState(null);
     const [selectedChapter, setSelectedChapter] = useState(null);
     const [text, setText] = useState([]);
+    const [fontSize, setFontSize] = useState(110);
     const chapters = [
         { label: '1 - Al-Fatiha (The Opening)', chapter: 1 },
         { label: '2 - Al-Baqarah (The Cow)', chapter: 2 },
@@ -155,6 +159,22 @@ function Quranselector() {
     }, [selectedLanguage]);
 
     useEffect(() => {
+        axios.get('https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/eng-mustafakhattabg/1.json')
+            .then((response) => {
+                let verses = response.data.chapter.map(item => ({
+                    verse: item.verse,
+                    text: item.text
+                }));
+
+                console.log(verses);
+                setText(verses);
+            })
+            .catch(
+                console.log("Couldn't get text")
+            );
+    }, []);
+
+    useEffect(() => {
         if (selectedLanguage && selectedEdition && selectedChapter) {
             let editionName;
             Object.values(editions).forEach(edition => {
@@ -162,6 +182,7 @@ function Quranselector() {
                     editionName = edition.name;
                 }
             });
+
 
             axios.get('https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/' + editionName + '/' + selectedChapter.chapter + '.json')
                 .then((response) => {
@@ -192,59 +213,80 @@ function Quranselector() {
     }
 
     function getEditions() {
-        if (editions === null) {
+        if (!editions) {
             return null;
-        } else {
-            let authors = [];
-
-            Object.values(editions).forEach(edition => {
-                authors.push(edition.author);
-            });
-
-            return authors;
         }
+
+        let authors = Object.values(editions).map((edition) => edition.author);
+        return authors.sort();
     }
 
+    const increaseFontSize = () => {
+        setFontSize((prevSize) => prevSize + 10);
+    };
+
+    const decreaseFontSize = () => {
+        setFontSize((prevSize) => Math.max(50, prevSize - 10)); // Decrease font size by 2, but ensure it doesn't go below 8
+    };
+
     return (
-        <div className='Quranselector'>
-            <Autocomplete
-                onChange={handleLanguageChange}
-                disablePortal
-                options={languages}
-                sx={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label="Language" />}
-            />
-            <Autocomplete
-                value={selectedEdition}
-                onChange={(event, newValue) => {
-                    setSelectedEdition(newValue);
-                }}
-                disablePortal
-                options={getEditions()}
-                sx={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label="Edition" />}
-                disabled={selectedLanguage === null}
-            />
-            <Autocomplete
-                onChange={(event, newValue) => {
-                    setSelectedChapter(newValue);
-                }}
-                disablePortal
-                options={chapters}
-                sx={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label="Chapter" />}
-            />
-            {(selectedLanguage && selectedEdition && selectedChapter) ? (
-                text.map((line) => (
-                    <>
-                        <p className='dropdown-navbar'>{line.verse}</p>
-                        <p className='dropdown-navbar'>{line.text}</p>
-                    </>
-                ))
-            ) : (
-                <></>
-            )}
-        </div>
+        <div className='quranSelector'>
+            <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '60%', lg: '60%' }, padding: { xs: '2%', md: '2%', lg: '1%' }, opacity: 0.8 }}>
+                <div className='editionSelector'>
+                    <Autocomplete
+                        defaultValue={selectedLanguage}
+                        onChange={handleLanguageChange}
+                        disablePortal
+                        options={languages}
+                        sx={{ width: { xs: '95%', sm: '25%' } }}
+                        renderInput={(params) => <TextField {...params} label="Language" />}
+                    />
+                    <Autocomplete
+                        value={selectedEdition}
+                        onChange={(event, newValue) => {
+                            setSelectedEdition(newValue);
+                        }}
+                        disablePortal
+                        options={getEditions()}
+                        sx={{ width: { xs: '95%', sm: '25%' }, marginTop: { xs: '3%', sm: '0px' } }}
+                        renderInput={(params) => <TextField {...params} label="Edition" />}
+                        disabled={selectedLanguage === null}
+                    />
+                    <Autocomplete
+                        onChange={(event, newValue) => {
+                            setSelectedChapter(newValue);
+                        }}
+                        disablePortal
+                        options={chapters}
+                        sx={{ width: { xs: '95%', sm: '25%' }, marginTop: { xs: '3%', sm: '0px' } }}
+                        renderInput={(params) => <TextField {...params} label="Chapter" />}
+                    />
+                    <ButtonGroup sx={{ marginTop: { xs: '3%', sm: '0px' } }} variant="outlined" aria-label="text size">
+                        <Button onClick={decreaseFontSize}>-</Button>
+                        <Button onClick={increaseFontSize}>+</Button>
+                    </ButtonGroup>
+                </div>
+                <div className='quranText'>
+                    {
+                        text.map((line) => (
+                            <>
+                                <div className='verse'>
+                                    <p className='verseNumber' style={{
+                                        marginLeft: '2.5%',
+                                        marginRight: '5%'
+                                    }}>{line.verse}</p>
+                                    <p className='verseText' style={{
+                                        marginRight: '5%', fontSize: `${fontSize}%`, fontWeight: 400,
+                                        fontFamily: 'Roboto', textAlign:'right'
+                                    }}>{line.text}</p>
+                                </div >
+                                <Divider variant="inset" sx={{ borderBottomWidth: 2 }} />
+                            </>
+                        ))
+                    }
+                </div>
+            </Paper >
+        </div >
     );
 }
 

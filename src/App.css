@@ -31,7 +31,8 @@
 }
 
 .prayerTimes,
-.quranVerse {
+.quranVerse,
+.quranSelector {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -97,6 +98,18 @@
   justify-content: space-around;
 }
 
+.verse {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.verseNumber {
+  font-weight: 800;
+  font-family: 'Roboto', sans-serif;
+}
+
 @media only screen and (max-width: 600px) {
   .time {
     display: flex;
@@ -127,6 +140,14 @@
     font-family: 'Roboto', sans-serif;
     margin-bottom: -3%;
     padding: 5%;
+  }
+
+  .editionSelector {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2%;
   }
 }
 
@@ -161,6 +182,13 @@
     font-family: 'Roboto', sans-serif;
     margin-bottom: -3%;
   }
+
+  .editionSelector {
+    display: flex;
+    flex-wrap: row;
+    justify-content: space-between;
+    padding: 2%;
+  }
 }
 
 
@@ -194,5 +222,12 @@
     font-size: 100%;
     font-family: 'Roboto', sans-serif;
     margin-bottom: -3%;
+  }
+
+  .editionSelector {
+    display: flex;
+    flex-wrap: row;
+    justify-content: space-between;
+    padding: 2%;
   }
 }
