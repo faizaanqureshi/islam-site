@@ -143,7 +143,7 @@ function Quranselector() {
     ]
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:5000/api/quran/languages/')
+        axios.get('https://dl60m3uxxd.execute-api.us-east-2.amazonaws.com/dev/api/quran/languages/')
             .then((response) => {
                 setLanguages(response.data.languages.sort());
             })
@@ -204,7 +204,7 @@ function Quranselector() {
     const handleLanguageChange = (event, newValue) => {
         console.log(newValue);
         setSelectedLanguage(newValue);
-        axios.get('http://127.0.0.1:5000/api/quran/editionsbylanguage/?language=' + newValue)
+        axios.get('https://dl60m3uxxd.execute-api.us-east-2.amazonaws.com/dev/api/quran/editionsbylanguage/?language=' + newValue)
             .then((response) => {
                 setEditions(response.data.editions.sort());
             })

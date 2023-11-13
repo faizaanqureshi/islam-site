@@ -187,6 +187,10 @@ function Prayertimes() {
     }
 
     function convertToAmPm(prayer) {
+        if (!prayer) {
+            return null;
+        }
+        
         let newTime
         let time = prayer.split(':');
         let hour = time[0];

@@ -30,7 +30,7 @@ function Hadeethselector() {
     const [fontSize, setFontSize] = useState(110);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:5000/api/hadeeth/languages/')
+        axios.get('https://dl60m3uxxd.execute-api.us-east-2.amazonaws.com/dev/api/hadeeth/languages/')
             .then((response) => {
                 console.log(response.data)
                 setLanguages(response.data.languages.sort());
@@ -54,7 +54,7 @@ function Hadeethselector() {
         }
 
         axios
-            .get('http://127.0.0.1:5000/api/hadeeth/sections/?book=' + selectedBook)
+            .get('https://dl60m3uxxd.execute-api.us-east-2.amazonaws.com/dev/api/hadeeth/sections/?book=' + selectedBook)
             .then((response) => {
                 let sections = response.data.sections;
                 sectionList = sections.map((section) => `${section.section_number} - ${section.section_name}`);
@@ -138,7 +138,7 @@ function Hadeethselector() {
     const handleLanguageChange = (event, newValue) => {
         console.log(newValue);
         setSelectedLanguage(newValue);
-        axios.get('http://127.0.0.1:5000/api/hadeeth/bookbylanguage/?language=' + newValue)
+        axios.get('https://dl60m3uxxd.execute-api.us-east-2.amazonaws.com/dev/api/hadeeth/bookbylanguage/?language=' + newValue)
             .then((response) => {
                 setBooks(response.data.books.sort());
             })
