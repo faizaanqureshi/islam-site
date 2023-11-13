@@ -190,7 +190,7 @@ function Prayertimes() {
         if (!prayer) {
             return null;
         }
-        
+
         let newTime
         let time = prayer.split(':');
         let hour = time[0];
@@ -239,7 +239,7 @@ function Prayertimes() {
 
     return (
         <div class='prayerTimes'>
-            <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '60%', lg: '60%' }, padding: { xs: '2%', md: '2%', lg: '1%' }, opacity: 0.8 }}>
+            <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '75%' }, padding: { xs: '2%', md: '2%', lg: '1%' }, opacity: 0.8 }}>
                 <h1 className='prayerTimesTitle'>Prayer Times in {city}, {province}</h1>
                 <div className='dates'>
                     <h2 className='date'>{gregorianDate} {gregorianMonth}, {gregorianYear}</h2>

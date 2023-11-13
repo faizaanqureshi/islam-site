@@ -166,7 +166,7 @@ function Hadeethselector() {
 
     return (
         <div className='quranSelector'>
-            <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '60%', lg: '60%' }, padding: { xs: '2%', md: '2%', lg: '1%' }, opacity: 0.8 }}>
+            <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '75%' }, padding: { xs: '2%', md: '2%', lg: '1%' }, opacity: 0.8 }}>
                 <div className='editionSelector'>
                     <Autocomplete
                         defaultValue={selectedLanguage}
