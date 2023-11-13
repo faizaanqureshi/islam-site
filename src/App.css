@@ -98,11 +98,16 @@
   justify-content: space-around;
 }
 
-.verse {
+.verse,
+.verseArabic {
   display: flex;
   flex-flow: row;
   justify-content: space-between;
   align-items: baseline;
+}
+
+.verseArabic:hover {
+  background-color: rgba(78, 79, 235, 0.4);
 }
 
 .verseNumber {

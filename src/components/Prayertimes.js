@@ -186,24 +186,43 @@ function Prayertimes() {
         }
     }
 
+    function convertToAmPm(prayer) {
+        let newTime
+        let time = prayer.split(':');
+        let hour = time[0];
+        let minutes = time[1];
+        if (hour > "12") {
+            newTime = `${hour - 12}:${minutes} PM`
+        } else if (hour == "00") {
+            newTime = `${hour + 12}:${minutes} AM`
+        } else if (hour == "12") {
+            newTime = `${hour}:${minutes} PM`
+        } else {
+            newTime = `${hour[1]}:${minutes} AM`
+        }
+        return newTime;
+    }
+
     function prayer(index) {
         let prayer;
         if (index === 0) {
-            prayer = fajr;
+            prayer = convertToAmPm(fajr);
         } else if (index === 1) {
-            prayer = dhuhr;
+            prayer = convertToAmPm(dhuhr);
         } else if (index === 2) {
-            prayer = asr;
+            prayer = convertToAmPm(asr);
         } else if (index === 3) {
-            prayer = maghrib;
+            prayer = convertToAmPm(maghrib);
         } else if (index === 4) {
-            prayer = isha;
+            prayer = convertToAmPm(isha);
         }
 
         return (
             <>
                 <h2 className='prayerName'>{prayers[index]}</h2>
-                <h2 className='prayerTime'>{prayer}</h2>
+                <h2 className='prayerTime'>{
+                    prayer
+                }</h2>
             </>
         );
     }
@@ -216,7 +235,7 @@ function Prayertimes() {
 
     return (
         <div class='prayerTimes'>
-            <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '60%', lg: '60%' }, padding: { xs: '2%', md: '2%', lg: '1%' }, opacity:0.8 }}>
+            <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '60%', lg: '60%' }, padding: { xs: '2%', md: '2%', lg: '1%' }, opacity: 0.8 }}>
                 <h1 className='prayerTimesTitle'>Prayer Times in {city}, {province}</h1>
                 <div className='dates'>
                     <h2 className='date'>{gregorianDate} {gregorianMonth}, {gregorianYear}</h2>

@@ -21,9 +21,11 @@ function Hadeethselector() {
     const [languages, setLanguages] = useState([]);
     const [books, setBooks] = useState([]);
     const [sections, setSections] = useState([]);
+    const [numbers, setNumbers] = useState([]);
     const [selectedLanguage, setSelectedLanguage] = useState(null);
     const [selectedBook, setSelectedBook] = useState(null);
     const [selectedSection, setSelectedSection] = useState(null);
+    const [selectedNumber, setSelectedNumber] = useState(null);
     const [text, setText] = useState([]);
     const [fontSize, setFontSize] = useState(110);
 
@@ -64,6 +66,26 @@ function Hadeethselector() {
                 setSections([]);
                 setSelectedSection(null);
             });
+
+        axios.get('https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/info.json')
+            .then((response) => {
+                let listOfHadeethNums = []
+                for (const [bookKey, bookValue] of Object.entries(response.data)) {
+                    if (bookValue.metadata.name === selectedBook) {
+                        const sectionOne = bookValue.metadata.section_details['1'];
+                        const hadithnumberFirst = sectionOne.hadithnumber_first;
+                        for (let i = hadithnumberFirst; i <= bookValue.metadata.last_hadithnumber; i++) {
+                            listOfHadeethNums.push({ label: `${i}` });
+                        }
+                        setNumbers(listOfHadeethNums);
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching hadeeth numbers:', error);
+                setNumbers([]);
+                setSelectedNumber(null);
+            });
     }, [selectedBook]);
 
     useEffect(() => {
@@ -82,7 +104,7 @@ function Hadeethselector() {
     }, []);
 
     useEffect(() => {
-        if (selectedLanguage && selectedBook && selectedSection) {
+        if (selectedLanguage && selectedBook && (selectedSection || selectedNumber)) {
             let bookName;
             Object.values(books).forEach(book => {
                 if (book.book === selectedBook) {
@@ -90,17 +112,28 @@ function Hadeethselector() {
                 }
             });
 
-            axios.get('https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/' + bookName + '/sections/' + selectedSection.number + '.json')
-                .then((response) => {
-                    let hadeeths = response.data.hadiths.map(narration => ({
-                        number: narration.hadithnumber,
-                        text: narration.text
-                    }));
+            if (selectedSection !== null) {
+                axios.get('https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/' + bookName + '/sections/' + selectedSection.number + '.json')
+                    .then((response) => {
+                        let hadeeths = response.data.hadiths.map(narration => ({
+                            number: narration.hadithnumber,
+                            text: narration.text
+                        }));
 
-                    setText(hadeeths)
-                })
+                        setText(hadeeths)
+                    })
+            } else if (selectedNumber !== null) {
+                axios.get('https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/' + bookName + `/${selectedNumber.label}.json`)
+                    .then((response) => {
+                        let hadeeth = [{ number: selectedNumber.label, text: response.data.hadiths[0].text }];
+                        console.log(hadeeth);
+                        setText(hadeeth);
+                    })
+            } else {
+                console.log('Error loading text')
+            }
         }
-    }, [selectedLanguage, selectedBook, selectedSection, sections]);
+    }, [selectedLanguage, selectedBook, selectedSection, selectedNumber]);
 
     const handleLanguageChange = (event, newValue) => {
         console.log(newValue);
@@ -124,11 +157,11 @@ function Hadeethselector() {
     }
 
     const increaseFontSize = () => {
-        setFontSize((prevSize) => prevSize + 10);
+        setFontSize((prevSize) => prevSize + 20);
     };
 
     const decreaseFontSize = () => {
-        setFontSize((prevSize) => Math.max(50, prevSize - 10)); // Decrease font size by 2, but ensure it doesn't go below 8
+        setFontSize((prevSize) => Math.max(50, prevSize - 20)); // Decrease font size by 2, but ensure it doesn't go below 8
     };
 
     return (
@@ -140,7 +173,7 @@ function Hadeethselector() {
                         onChange={handleLanguageChange}
                         disablePortal
                         options={languages}
-                        sx={{ width: { xs: '95%', sm: '25%' } }}
+                        sx={{ width: { xs: '95%', sm: '20%' } }}
                         renderInput={(params) => <TextField {...params} label="Language" />}
                     />
                     <Autocomplete
@@ -150,7 +183,7 @@ function Hadeethselector() {
                         }}
                         disablePortal
                         options={getBooks()}
-                        sx={{ width: { xs: '95%', sm: '25%' }, marginTop: { xs: '3%', sm: '0px' } }}
+                        sx={{ width: { xs: '95%', sm: '20%' }, marginTop: { xs: '3%', sm: '0px' } }}
                         renderInput={(params) => <TextField {...params} label="Book" />}
                         disabled={selectedLanguage === null}
                     />
@@ -158,12 +191,25 @@ function Hadeethselector() {
                         value={selectedSection}
                         onChange={(event, newValue) => {
                             setSelectedSection(newValue);
+                            setSelectedNumber(null);
                         }}
                         disablePortal
                         options={sections}
-                        sx={{ width: { xs: '95%', sm: '25%' }, marginTop: { xs: '3%', sm: '0px' } }}
+                        sx={{ width: { xs: '95%', sm: '20%' }, marginTop: { xs: '3%', sm: '0px' } }}
                         renderInput={(params) => <TextField {...params} label="Section" />}
-                        disabled={selectedBook === null}
+                        disabled={!(selectedNumber === null) || selectedBook === null}
+                    />
+                    <Autocomplete
+                        value={selectedNumber}
+                        onChange={(event, newValue) => {
+                            setSelectedNumber(newValue);
+                            setSelectedSection(null);
+                        }}
+                        disablePortal
+                        options={numbers}
+                        sx={{ width: { xs: '95%', sm: '20%' }, marginTop: { xs: '3%', sm: '0px' } }}
+                        renderInput={(params) => <TextField {...params} label="Number" />}
+                        disabled={!(selectedSection === null) || selectedBook === null}
                     />
                     <ButtonGroup sx={{ marginTop: { xs: '3%', sm: '0px' } }} variant="outlined" aria-label="text size">
                         <Button onClick={decreaseFontSize}>-</Button>
@@ -181,7 +227,7 @@ function Hadeethselector() {
                                     }}>{line.number}</p>
                                     <p className='verseText' style={{
                                         marginRight: '5%', fontSize: `${fontSize}%`, fontWeight: 400,
-                                        fontFamily: 'Roboto', textAlign: 'right'
+                                        fontFamily: 'Roboto', textAlign: 'right', lineHeight: 2
                                     }}>{line.text}</p>
                                 </div >
                                 <Divider variant="inset" sx={{ borderBottomWidth: 2 }} />

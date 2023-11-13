@@ -193,7 +193,10 @@ function Quranselector() {
                     setText(verses);
                 })
                 .catch(
-                    console.log("Couldn't get text")
+                    (error) => {
+                        console.error('Error fetching sections:', error);
+                        setText(null);
+                    }
                 );
         }
     }, [selectedLanguage, selectedEdition, selectedChapter, editions]);
@@ -220,11 +223,11 @@ function Quranselector() {
     }
 
     const increaseFontSize = () => {
-        setFontSize((prevSize) => prevSize + 10);
+        setFontSize((prevSize) => prevSize + 20);
     };
 
     const decreaseFontSize = () => {
-        setFontSize((prevSize) => Math.max(50, prevSize - 10)); // Decrease font size by 2, but ensure it doesn't go below 8
+        setFontSize((prevSize) => Math.max(50, prevSize - 20)); // Decrease font size by 2, but ensure it doesn't go below 8
     };
 
     return (
@@ -265,23 +268,18 @@ function Quranselector() {
                     </ButtonGroup>
                 </div>
                 <div className='quranText'>
-                    {
-                        text.map((line) => (
-                            <>
-                                <div className='verse'>
-                                    <p className='verseNumber' style={{
-                                        marginLeft: '2.5%',
-                                        marginRight: '5%'
-                                    }}>{line.verse}</p>
-                                    <p className='verseText' style={{
-                                        marginRight: '5%', fontSize: `${fontSize}%`, fontWeight: 400,
-                                        fontFamily: 'Roboto', textAlign:'right'
-                                    }}>{line.text}</p>
-                                </div >
-                                <Divider variant="inset" sx={{ borderBottomWidth: 2 }} />
-                            </>
-                        ))
-                    }
+                    {text.map((line) => (
+                        <>
+                            <div className='verse'>
+                                <p className='verseNumber' style={{ marginLeft: '2.5%', marginRight: '5%' }}>{line.verse}</p>
+                                <p className='verseText' style={{
+                                    marginRight: '5%', fontSize: `${fontSize}%`, fontWeight: 400,
+                                    fontFamily: 'Roboto', textAlign: 'right', lineHeight: 2
+                                }}>{line.text}</p>
+                            </div>
+                            <Divider variant="inset" sx={{ borderBottomWidth: 2 }} />
+                        </>
+                    ))}
                 </div>
             </Paper >
         </div >
