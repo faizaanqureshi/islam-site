@@ -111,7 +111,7 @@ function Prayertimes() {
             setProvince(longitude);
         })
 
-        axios.get('http://api.aladhan.com/v1/timings/' + `${day}-${month}-${year}`, {
+        axios.get('https://api.aladhan.com/v1/timings/' + `${day}-${month}-${year}`, {
             params: {
                 'latitude': latitude,
                 'longitude': longitude,
@@ -130,7 +130,7 @@ function Prayertimes() {
             setGregorianYear(response.data.data.date.gregorian.year);
         })
 
-        axios.get('http://api.aladhan.com/v1/timings/' + `${tomorrowDay}-${tomorrowMonth}-${tomorrowYear}`, {
+        axios.get('https://api.aladhan.com/v1/timings/' + `${tomorrowDay}-${tomorrowMonth}-${tomorrowYear}`, {
             params: {
                 'latitude': latitude,
                 'longitude': longitude,
