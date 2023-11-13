@@ -50,7 +50,7 @@ function Navbar() {
             <Link to={'/'} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className='sitelogo'>
                     <MosqueIcon />
-                    <h1 className='logo'>Blessed Path</h1>
+                    <h1 className='logo'>The Blessed Path</h1>
                 </div>
             </Link>
             <div className='links'>
