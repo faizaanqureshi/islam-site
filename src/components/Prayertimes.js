@@ -99,11 +99,28 @@ function Prayertimes() {
             const province = xmlDoc.querySelector('state').textContent;
             const city = xmlDoc.querySelector('city');
             const town = xmlDoc.querySelector('town');
+            const borough = xmlDoc.querySelector('borough');
+            const village = xmlDoc.querySelector('village');
+            const suburb = xmlDoc.querySelector('suburb');
+            const neighbourhood = xmlDoc.querySelector('neighbourhood');
+            
             if (city) {
                 setCity(city.textContent);
-            } else {
+            } else if (town) {
                 setCity(town.textContent);
+            } else if (borough) {
+                setCity(borough.textContent);
+            } else if (village) {
+                setCity(village.textContent);
+            } else if (suburb) {
+                setCity(suburb.textContent);
+            } else if (neighbourhood) {
+                setCity(neighbourhood.textContent);
+            } else {
+                setCity(latitude);
+                setProvince(longitude);
             }
+
             setCountry(country);
             setProvince(province);
         }).catch(() => {
@@ -156,17 +173,17 @@ function Prayertimes() {
 
         let difference;
 
-        if (nextPrayer == nextFajr) {
+        if (nextPrayer === nextFajr) {
             difference = calculateDifference(nextFajr, tomorrow);
-        } else if (nextPrayer == isha) {
+        } else if (nextPrayer === isha) {
             difference = calculateDifference(isha, today);
-        } else if (nextPrayer == maghrib) {
+        } else if (nextPrayer === maghrib) {
             difference = calculateDifference(maghrib, today);
-        } else if (nextPrayer == asr) {
+        } else if (nextPrayer === asr) {
             difference = calculateDifference(asr, today);
-        } else if (nextPrayer == dhuhr) {
+        } else if (nextPrayer === dhuhr) {
             difference = calculateDifference(dhuhr, today);
-        } else if (nextPrayer == fajr) {
+        } else if (nextPrayer === fajr) {
             difference = calculateDifference(fajr, today);
         }
 
@@ -197,9 +214,9 @@ function Prayertimes() {
         let minutes = time[1];
         if (hour > "12") {
             newTime = `${hour - 12}:${minutes} PM`
-        } else if (hour == "00") {
+        } else if (hour === "00") {
             newTime = `${hour + 12}:${minutes} AM`
-        } else if (hour == "12") {
+        } else if (hour === "12") {
             newTime = `${hour}:${minutes} PM`
         } else {
             newTime = `${hour[1]}:${minutes} AM`
