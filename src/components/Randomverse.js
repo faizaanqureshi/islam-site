@@ -23,24 +23,24 @@ function Randomverse() {
 
     return (
         <div class='quranVerse'>
-            <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '75%' }, padding: { xs: '2%', md: '2%', lg: '1%' }, opacity: 0.8 }}>
-                {verse !== null ? (
-                    <>
-                        <h1 className='arabicVerse'>{verse.arabic}</h1>
-                        <h1 className='englishVerse'>{verse.english}</h1>
-                        <div className='verseDetails'>
-                            <h2 className='verseDetail'>{verse.name}</h2>
-                            <h2 className='verseDetail2'>{verse.chapter}:</h2>
-                            <h2 className='verseDetail'>{verse.verse}</h2>
-                        </div>
-                    </>
-                ) : (
-                    <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '75%' }, padding: '0%', opacity: 0.8 }}>
-                        <div class="loader"></div>
-                    </Paper>
-                )}
-            </Paper>
-        </div>
+            {verse !== null ? (
+                <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '75%' }, padding: { xs: '2%', md: '2%', lg: '1%' }, opacity: 0.8 }}>
+
+
+                    <h1 className='arabicVerse'>{verse.arabic}</h1>
+                    <h1 className='englishVerse'>{verse.english}</h1>
+                    <div className='verseDetails'>
+                        <h2 className='verseDetail'>{verse.name}</h2>
+                        <h2 className='verseDetail2'>{verse.chapter}:</h2>
+                        <h2 className='verseDetail'>{verse.verse}</h2>
+                    </div>
+                </Paper>
+            ) : (
+                <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '75%' }, padding: '0%', opacity: 0.8 }}>
+                    <div class="loader"></div>
+                </Paper>
+            )}
+        </div >
     );
 }
 
