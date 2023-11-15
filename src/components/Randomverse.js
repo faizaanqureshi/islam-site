@@ -35,7 +35,9 @@ function Randomverse() {
                         </div>
                     </>
                 ) : (
-                    <p>Loading...</p>
+                    <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '75%' }, padding: '0%', opacity: 0.8 }}>
+                        <div class="loader"></div>
+                    </Paper>
                 )}
             </Paper>
         </div>

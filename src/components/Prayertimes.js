@@ -5,6 +5,7 @@ import Card from '@mui/material/Card';
 
 function Prayertimes() {
     const [locationEnabled, setLocationEnabled] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [city, setCity] = useState(null);
     const [province, setProvince] = useState(null);
     const [country, setCountry] = useState(null);
@@ -190,6 +191,7 @@ function Prayertimes() {
             difference = calculateDifference(fajr, today);
         }
 
+        setLoading(false);
         return difference;
     }
 
@@ -257,35 +259,45 @@ function Prayertimes() {
 
     setInterval(updateTime, 1000);
 
-    return (
-        <div class='prayerTimes'>
-            {locationEnabled ? (
-                <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '75%' }, padding: { xs: '2%', md: '2%', lg: '1%' }, opacity: 0.8 }}>
-                    <h1 className='prayerTimesTitle'>Prayer Times in {city}, {province}</h1>
-                    <div className='dates'>
-                        <h2 className='date'>{gregorianDate} {gregorianMonth}, {gregorianYear}</h2>
-                        <h2 className='date'>{hijriDate} {hijriMonth}, {hijriYear}</h2>
-                    </div>
-                    <div className='timings'>
-                        <Card className='time'>
-                            {prayer((prayerIndex) % 5)}
-                            <h2 className='prayerTime2'>{timeDifference}</h2>
-                        </Card>
-                        <Card className='time'>
-                            {prayer((prayerIndex + 1) % 5)}
-                        </Card>
-                        <Card className='time'>
-                            {prayer((prayerIndex + 2) % 5)}
-                        </Card>
-                        <Card className='time'>
-                            {prayer((prayerIndex + 3) % 5)}
-                        </Card>
-                        <Card className='time'>
-                            {prayer((prayerIndex + 4) % 5)}
-                        </Card>
-                    </div>
-                </Paper>
-            ) : (
+    function render() {
+        if (locationEnabled) {
+            if (loading) {
+                return (
+                    <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '75%' }, padding: '0%', opacity: 0.8 }}>
+                        <div class="loader"></div>
+                    </Paper>
+                );
+            } else {
+                return (
+                    <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '75%' }, padding: { xs: '2%', md: '2%', lg: '1%' }, opacity: 0.8 }}>
+                        <h1 className='prayerTimesTitle'>Prayer Times in {city}, {province}</h1>
+                        <div className='dates'>
+                            <h2 className='date'>{gregorianDate} {gregorianMonth}, {gregorianYear}</h2>
+                            <h2 className='date'>{hijriDate} {hijriMonth}, {hijriYear}</h2>
+                        </div>
+                        <div className='timings'>
+                            <Card className='time'>
+                                {prayer((prayerIndex) % 5)}
+                                <h2 className='prayerTime2'>{timeDifference}</h2>
+                            </Card>
+                            <Card className='time'>
+                                {prayer((prayerIndex + 1) % 5)}
+                            </Card>
+                            <Card className='time'>
+                                {prayer((prayerIndex + 2) % 5)}
+                            </Card>
+                            <Card className='time'>
+                                {prayer((prayerIndex + 3) % 5)}
+                            </Card>
+                            <Card className='time'>
+                                {prayer((prayerIndex + 4) % 5)}
+                            </Card>
+                        </div>
+                    </Paper>
+                );
+            }
+        } else {
+            return (
                 <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '75%' }, padding: { xs: '2%', md: '2%', lg: '1%' }, opacity: 0.8 }}>
                     <h2 className='locationError'>Turn on location services to view prayer times, then <span
                         style={{ cursor: 'pointer', color: 'black', textDecoration: 'underline' }}
@@ -294,8 +306,13 @@ function Prayertimes() {
                         reload the page
                     </span></h2>
                 </Paper>
-            )
-            }
+            );
+        }
+    }
+
+    return (
+        <div class='prayerTimes'>
+            {render()}
         </div>
     )
 }
