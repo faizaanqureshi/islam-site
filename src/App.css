@@ -11,6 +11,7 @@
   background-size:300% 100%;
   animation: l1 1s infinite linear;
 }
+
 @keyframes l1 {
   0% {background-position: right}
 }
@@ -174,6 +175,17 @@
     justify-content: space-between;
     padding: 2%;
   }
+
+  .loader2 {
+    width: 95%;
+    height: 40px;
+    background: 
+      linear-gradient(90deg,#0001 33%,#0005 50%,#0001 66%)
+      #f2f2f2;
+    background-size:300% 100%;
+    animation: l1 1s infinite linear;
+    margin-top: 10px;
+  }
 }
 
 @media only screen and (min-width: 600px) {
@@ -213,6 +225,15 @@
     flex-wrap: row;
     justify-content: space-between;
     padding: 2%;
+  }
+
+  .loader2 {
+    width: 40%;
+    background: 
+      linear-gradient(90deg,#0001 33%,#0005 50%,#0001 66%)
+      #f2f2f2;
+    background-size:300% 100%;
+    animation: l1 1s infinite linear;
   }
 }
 
@@ -254,5 +275,14 @@
     flex-wrap: row;
     justify-content: space-between;
     padding: 2%;
+  }
+
+  .loader2 {
+    width: 40%;
+    background: 
+      linear-gradient(90deg,#0001 33%,#0005 50%,#0001 66%)
+      #f2f2f2;
+    background-size:300% 100%;
+    animation: l1 1s infinite linear;
   }
 }

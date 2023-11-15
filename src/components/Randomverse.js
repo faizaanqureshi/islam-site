@@ -25,8 +25,6 @@ function Randomverse() {
         <div class='quranVerse'>
             {verse !== null ? (
                 <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '75%' }, padding: { xs: '2%', md: '2%', lg: '1%' }, opacity: 0.8 }}>
-
-
                     <h1 className='arabicVerse'>{verse.arabic}</h1>
                     <h1 className='englishVerse'>{verse.english}</h1>
                     <div className='verseDetails'>

@@ -18,6 +18,7 @@ function Hadeeth() {
 }
 
 function Hadeethselector() {
+    const [loading, setLoading] = useState(false);
     const [languages, setLanguages] = useState([]);
     const [books, setBooks] = useState([]);
     const [sections, setSections] = useState([]);
@@ -45,6 +46,7 @@ function Hadeethselector() {
     }, [selectedLanguage]);
 
     useEffect(() => {
+        setLoading(true);
         let sectionList = [];
 
         if (!selectedBook) {
@@ -60,6 +62,7 @@ function Hadeethselector() {
                 sectionList = sections.map((section) => `${section.section_number} - ${section.section_name}`);
                 setSections(sections);
                 setSelectedSection(null);
+                setLoading(false);
             })
             .catch((error) => {
                 console.error('Error fetching sections:', error);
@@ -164,6 +167,44 @@ function Hadeethselector() {
         setFontSize((prevSize) => Math.max(50, prevSize - 20)); // Decrease font size by 2, but ensure it doesn't go below 8
     };
 
+    function renderSectionsAndNumbers() {
+        if (loading && selectedBook) {
+            console.log('YEEEE');
+            return (
+                <div className="loader2"></div>
+            );
+        } else {
+            return (
+                <>
+                    <><Autocomplete
+                        value={selectedSection}
+                        onChange={(event, newValue) => {
+                            setSelectedSection(newValue);
+                            setSelectedNumber(null);
+                        }}
+                        disablePortal
+                        options={sections}
+                        sx={{ width: { xs: '95%', sm: '20%' }, marginTop: { xs: '3%', sm: '0px' } }}
+                        renderInput={(params) => <TextField {...params} label="Section" />}
+                        disabled={!(selectedNumber === null) || selectedBook === null}
+                    />
+                        <Autocomplete
+                            value={selectedNumber}
+                            onChange={(event, newValue) => {
+                                setSelectedNumber(newValue);
+                                setSelectedSection(null);
+                            }}
+                            disablePortal
+                            options={numbers}
+                            sx={{ width: { xs: '95%', sm: '20%' }, marginTop: { xs: '3%', sm: '0px' } }}
+                            renderInput={(params) => <TextField {...params} label="Number" />}
+                            disabled={!(selectedSection === null) || selectedBook === null}
+                        /></>
+                </>
+            );
+        }
+    }
+
     return (
         <div className='quranSelector'>
             <Paper sx={{ display: 'flex', flexFlow: 'column', justifyContent: 'space-between', width: { xs: '90%', md: '75%' }, padding: { xs: '2%', md: '2%', lg: '1%' }, opacity: 0.8 }}>
@@ -187,30 +228,7 @@ function Hadeethselector() {
                         renderInput={(params) => <TextField {...params} label="Book" />}
                         disabled={selectedLanguage === null}
                     />
-                    <Autocomplete
-                        value={selectedSection}
-                        onChange={(event, newValue) => {
-                            setSelectedSection(newValue);
-                            setSelectedNumber(null);
-                        }}
-                        disablePortal
-                        options={sections}
-                        sx={{ width: { xs: '95%', sm: '20%' }, marginTop: { xs: '3%', sm: '0px' } }}
-                        renderInput={(params) => <TextField {...params} label="Section" />}
-                        disabled={!(selectedNumber === null) || selectedBook === null}
-                    />
-                    <Autocomplete
-                        value={selectedNumber}
-                        onChange={(event, newValue) => {
-                            setSelectedNumber(newValue);
-                            setSelectedSection(null);
-                        }}
-                        disablePortal
-                        options={numbers}
-                        sx={{ width: { xs: '95%', sm: '20%' }, marginTop: { xs: '3%', sm: '0px' } }}
-                        renderInput={(params) => <TextField {...params} label="Number" />}
-                        disabled={!(selectedSection === null) || selectedBook === null}
-                    />
+                    {renderSectionsAndNumbers()}
                     <ButtonGroup sx={{ marginTop: { xs: '3%', sm: '0px' } }} variant="outlined" aria-label="text size">
                         <Button onClick={decreaseFontSize}>-</Button>
                         <Button onClick={increaseFontSize}>+</Button>
