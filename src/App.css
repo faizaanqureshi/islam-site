@@ -50,7 +50,10 @@
   font-family: 'Roboto', sans-serif;
   line-height: 1.5;
   padding: 1%;
-  margin-left: 2%;
+  margin-left: 5%;
+  margin-right: 5%;
+  max-width: 100%;
+  word-wrap: break-word;
 }
 
 .errorText {
@@ -61,7 +64,10 @@
   font-family: 'Roboto', sans-serif;
   line-height: 1.5;
   padding: 1%;
-  margin-left: 2%;
+  margin-left: 5%;
+  margin-right: 5%;
+  max-width: 100%;
+  word-wrap: break-word;
 }
 
 .requestText {
@@ -72,8 +78,10 @@
   font-family: 'Roboto', sans-serif;
   line-height: 1.5;
   padding: 1%;
-  margin-left: 7.5%;
-  padding-right: 5px;
+  margin-left: 5%;
+  margin-right: 5%;
+  max-width: 100%;
+  word-wrap: break-word;
 }
 
 .responseBubble {
