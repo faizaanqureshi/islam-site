@@ -6,7 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(rgba(238, 238, 238, 0.5), rgba(238, 238, 238, 0.1)), url(mosque.png);
+  background: linear-gradient(rgba(238, 238, 238, 1), rgba(238, 238, 238, 0.1)), url(mosque.png);
   background-size: cover;
   background-repeat: no-repeat;
   height: 100%;

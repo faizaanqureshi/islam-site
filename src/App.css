@@ -2,18 +2,160 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
 
+.messageLoader {
+  width: 10px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  animation: l5 1s infinite linear alternate;
+}
+@keyframes l5 {
+    0%  {box-shadow: 20px 0 #373737, -20px 0 #373737;background: #373737 }
+    33% {box-shadow: 20px 0 #757575, -20px 0 #757575;background: #757575}
+    66% {box-shadow: 20px 0 #c7c7c7,-20px 0 #c7c7c7; background: #c7c7c7}
+    100%{box-shadow: 20px 0 #FFF,-20px 0 #FFF; background: #FFF }
+}
+
+.chatTitleText {
+  background-color: #1976D2;
+  color: white;
+  padding: 3%;
+  border-radius: 1rem 1rem 0rem 0rem;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 150%;
+  font-weight: 600;
+}
+
+.chatRequest {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding: 2%;
+}
+
+.responseText {
+  font-size: 100%;
+  letter-spacing: 0.7px;
+  font-weight: 500;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.5;
+  padding: 1%;
+  margin-left: 2%;
+}
+
+.requestText {
+  font-size: 100%;
+  letter-spacing: 0.7px;
+  font-weight: 500;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.5;
+  padding: 1%;
+  margin-left: 7.5%;
+  padding-right: 5px;
+}
+
+.responseBubble {
+  background-color: #292929;
+  max-width: 80%;
+  padding: 1%;
+  border-radius: 2rem 2rem 2rem 0rem;
+  margin: 2%;
+  opacity: 0.8;
+}
+
+.responseBubbleLoader {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #292929;
+  max-width: 20%;
+  padding: 2%;
+  border-radius: 2rem 2rem 2rem 0rem;
+  margin: 2%;
+  opacity: 0.8;
+}
+
+.requestBubble {
+  background-color: #1976D2;
+  max-width: 50%;
+  padding: 1%;
+  border-radius: 2rem 2rem 0rem 2rem;
+  margin: 2%;
+  opacity: 0.8;
+  align-self: flex-end;
+}
+
+.spinner {
+  width: 10px;
+  height: 10px;
+  padding: 10px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #000000;
+  --_m: 
+    conic-gradient(#0000 10%,#000),
+    linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+          mask: var(--_m);
+  -webkit-mask-composite: source-out;
+          mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+@keyframes l3 {to{transform: rotate(1turn)}}
+
 .loader {
   width: 100%;
   height: 60px;
-  background: 
-    linear-gradient(90deg,#0001 33%,#0005 50%,#0001 66%)
-    #f2f2f2;
-  background-size:300% 100%;
+  background:
+    linear-gradient(90deg, #0001 33%, #0005 50%, #0001 66%) #f2f2f2;
+  background-size: 300% 100%;
   animation: l1 1s infinite linear;
 }
 
 @keyframes l1 {
-  0% {background-position: right}
+  0% {
+    background-position: right
+  }
+}
+
+.gptTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gptPrompt {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.gptInfo {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.info {
+  margin-left: 5%;
+}
+
+.disclaimer {
+  font-size: 100%;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #f2f2f2;
+  font-family: 'Roboto', sans-serif;
+  padding: 1%
+}
+
+.responseMessage {
+  font-size: 100%;
+  font-weight: 500;
+  line-height: 2;
+  font-family: 'Roboto', sans-serif;
 }
 
 .locationError {
@@ -179,12 +321,30 @@
   .loader2 {
     width: 95%;
     height: 40px;
-    background: 
-      linear-gradient(90deg,#0001 33%,#0005 50%,#0001 66%)
-      #f2f2f2;
-    background-size:300% 100%;
+    background:
+      linear-gradient(90deg, #0001 33%, #0005 50%, #0001 66%) #f2f2f2;
+    background-size: 300% 100%;
     animation: l1 1s infinite linear;
     margin-top: 10px;
+  }
+
+  .chatButton {
+    position: fixed;
+    z-index: 9999;
+    bottom: 5%;
+    right: 2.5%;
+  }
+
+  .chatBody {
+    display: flex;
+    flex-flow: column;
+    max-height: 60vh;
+    min-height: 60vh;
+    overflow: auto;
+    background: linear-gradient(rgba(238, 238, 238, 0.5), rgba(238, 238, 238, 0.5)), url(./mosque2.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    scrollbar-width: thin;
   }
 }
 
@@ -229,11 +389,38 @@
 
   .loader2 {
     width: 40%;
-    background: 
-      linear-gradient(90deg,#0001 33%,#0005 50%,#0001 66%)
-      #f2f2f2;
-    background-size:300% 100%;
+    background:
+      linear-gradient(90deg, #0001 33%, #0005 50%, #0001 66%) #f2f2f2;
+    background-size: 300% 100%;
     animation: l1 1s infinite linear;
+  }
+
+  .chatButton {
+    position: fixed;
+    z-index: 9999;
+    bottom: 5%;
+    right: 2.5%;
+  }
+
+  .chatBody {
+    display: flex;
+    flex-flow: column;
+    max-height: 50vh;
+    min-height: 50vh;
+    overflow: auto;
+    background: linear-gradient(rgba(238, 238, 238, 0.5), rgba(238, 238, 238, 0.5)), url(./mosque2.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    scrollbar-width: thin;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .chatButton {
+    position: fixed;
+    z-index: 9999;
+    bottom: 5%;
+    right: 12.5%;
   }
 }
 
@@ -279,10 +466,16 @@
 
   .loader2 {
     width: 40%;
-    background: 
-      linear-gradient(90deg,#0001 33%,#0005 50%,#0001 66%)
-      #f2f2f2;
-    background-size:300% 100%;
+    background:
+      linear-gradient(90deg, #0001 33%, #0005 50%, #0001 66%) #f2f2f2;
+    background-size: 300% 100%;
     animation: l1 1s infinite linear;
+  }
+
+  .chatButton {
+    position: fixed;
+    z-index: 9999;
+    bottom: 5%;
+    right: 12.5%;
   }
 }
