@@ -33,7 +33,6 @@ function Hadeethselector() {
     useEffect(() => {
         axios.get('https://dl60m3uxxd.execute-api.us-east-2.amazonaws.com/dev/api/hadeeth/languages/')
             .then((response) => {
-                console.log(response.data)
                 setLanguages(response.data.languages.sort());
             })
             .catch(
@@ -139,7 +138,6 @@ function Hadeethselector() {
     }, [selectedLanguage, selectedBook, selectedSection, selectedNumber]);
 
     const handleLanguageChange = (event, newValue) => {
-        console.log(newValue);
         setSelectedLanguage(newValue);
         axios.get('https://dl60m3uxxd.execute-api.us-east-2.amazonaws.com/dev/api/hadeeth/bookbylanguage/?language=' + newValue)
             .then((response) => {
@@ -164,12 +162,11 @@ function Hadeethselector() {
     };
 
     const decreaseFontSize = () => {
-        setFontSize((prevSize) => Math.max(50, prevSize - 20)); // Decrease font size by 2, but ensure it doesn't go below 8
+        setFontSize((prevSize) => Math.max(50, prevSize - 20));
     };
 
     function renderSectionsAndNumbers() {
         if (loading && selectedBook) {
-            console.log('YEEEE');
             return (
                 <div className="loader2"></div>
             );
