@@ -338,8 +338,8 @@
   .chatBody {
     display: flex;
     flex-flow: column;
-    max-height: 60vh;
-    min-height: 60vh;
+    max-height: 50vh;
+    min-height: 50vh;
     overflow: auto;
     background: linear-gradient(rgba(238, 238, 238, 0.5), rgba(238, 238, 238, 0.5)), url(./mosque2.jpg);
     background-size: cover;
