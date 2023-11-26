@@ -58,7 +58,7 @@ function Islamchatbot() {
           })
         setMessages((prevMessages) => [
           ...prevMessages,
-          { id: prevMessages.length + 1, message: 'Error: Request timed out. Don\'t worry it\'s not your fault. The LLMs being used are still in their beta development stages, so errors are expected. Next time, try asking more specific quest. ', type: 'error' },
+          { id: prevMessages.length + 1, message: 'Error: Request timed out. Don\'t worry it\'s not your fault. The LLMs being used are still in their beta development stages, so errors are expected. Next time, try asking more specific questions. ', type: 'error' },
         ]);
       });
   };
